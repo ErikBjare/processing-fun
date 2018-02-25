@@ -25,11 +25,20 @@ void draw() {
  //int arms = int(16.0 * (1.0 + sin(millis() / 10000.0)/2.0));
  octoArms(16);
  
+ if(false) {
+   pushMatrix();
+   // Rotate towards camera
+   rotateZ(-PI/8);
+   translate(400, 0, 0);
+   octoArms(8);
+   popMatrix();
+ }
+ 
  if(RENDERMODE) {
    saveFrame("frames/####.png");
  }
  
- println(frameCount, _millis());
+ println(frameCount, frameRate, _millis());
 }
 
 void octoArms(int arms) {
@@ -79,7 +88,10 @@ void createArray(int n, float dist) {
      rotateY(_millis()/80000.0);
      pushMatrix();
      rotateY(_millis()/80000.0);
-     translate(i*dist, 0, 0);
+     
+     // TODO: Sync with MIDI/music
+     float size = pow(2+sin(_millis()/200.0)/2, 2);
+     translate(i*dist*size/4, 0, 0);
 
      boxColor(i * dist);
      box(4.0);
